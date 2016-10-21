@@ -94,13 +94,21 @@ function log(data) {
 }
 
 var data = dirTree('images', -1, []);
-//log(data);
-//log(licenses);
-//log(images);
 
 var data = {
   licenses: licenses,
   images: images
 };
 
-log(data);
+var outputDir = 'build';
+if (!fs.existsSync(outputDir)){
+    fs.mkdirSync(outputDir);
+}
+
+fs.writeFile(outputDir + '/images.json', JSON.stringify(data), function(err) {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log("JSON saved");
+  }
+});
