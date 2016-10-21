@@ -61,7 +61,6 @@ function dirTree(filename, licenseId, tags) {
     var licenseFile = filename.substr(0, filename.lastIndexOf('.')) + '.' + licenseExtension;
     licenseId = checkLicense(licenseFile, licenseId);
 
-    info.isFile = true;
     info.licenseId = licenseId;
     info.id = getValidId(filename);
     info.path = filename;
