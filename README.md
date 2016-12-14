@@ -64,3 +64,10 @@ To build the output JSON files for each asset type you should execute the follow
 ```bash
 npm run build
 ```
+
+## How to use it
+
+You can fetch the assets JSON using the following url:
+
+https://fernandojsg.github.io/a-inspector-assets/build/images.json
+
