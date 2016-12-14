@@ -1,0 +1,19 @@
+{
+  "name": "a-inspector-assets",
+  "version": "1.0.0",
+  "description": "A-Inspector sample assets",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandojsg/inspector-assets.git"
+  },
+  "author": "Fernando Serrano <fernandojsg@gmail.com> (http://fernandojsg.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fernandojsg/inspector-assets/issues"
+  },
+  "homepage": "https://github.com/fernandojsg/inspector-assets#readme"
+}

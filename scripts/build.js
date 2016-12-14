@@ -74,7 +74,7 @@ function dirTree (filename, licenseId, tags) {
   return info;
 }
 
-dirTree('images', -1, []);
+dirTree('assets/images', -1, []);
 
 var data = {
   licenses: licenses,
