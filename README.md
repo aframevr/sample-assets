@@ -20,15 +20,15 @@ If you want to specify a license for just one file while leaving the default lic
 For example:
 
 ```
-license.txt [LicenseA]
-- particles (LicenseA applied)
+license.txt            [LicenseA]
+- particles             * LicenseA applied
 - noise
-  license.txt [LicenseB]
-  - perlin (LicenseB applied)
-      noiseperlin.txt [Specific file license]
-      noiseperlin.jpg (noiseperlin.txt license)
-      perlin0.jpg     (LicenseB applied)
-      perlin1.jpg     (LicenseB applied)
+  license.txt          [LicenseB]
+  - perlin              * LicenseB applied
+      noiseperlin.txt  [Specific file license]
+      noiseperlin.jpg   * noiseperlin.txt license
+      perlin0.jpg       * LicenseB applied
+      perlin1.jpg       * LicenseB applied
 ```
 
 ## JSON Structure
