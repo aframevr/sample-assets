@@ -44,8 +44,7 @@ Example of JSON file for images:
 ```json
 {
   "licenses": [
-    "MIT Three.js project\n",
-    ...
+    "MIT Three.js project\n"
   ],
   "images": [
     {
@@ -54,7 +53,6 @@ Example of JSON file for images:
       "path": "images/bricks/brick_bump.jpg",
       "tags": [ "bricks" ]
     }
-    ...
   ]
 }
 ```
