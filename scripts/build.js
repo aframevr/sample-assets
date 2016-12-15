@@ -7,7 +7,6 @@ function log (data) {
 }
 
 function getValidId (name) {
-  // info.name.replace(/\.[^/.]+$/, '').replace(/\s+/g, '')
   return name.split('/').pop()
           .split('.').shift()
           .replace(/\s/, '-')
@@ -20,13 +19,6 @@ function getExtension (filename) {
   return filename.toLowerCase().substr(filename.lastIndexOf('.') + 1);
 }
 
-var imageExtensions = [ 'jpg', 'png', 'hdr', 'gif' ];
-
-var images = [];
-var licenses = [];
-var licenseExtension = 'txt';
-var folderLicense = 'license.' + licenseExtension;
-
 function checkLicense (filename, licenseId) {
   try {
     var buf = fs.readFileSync(filename, "utf8");
@@ -36,6 +28,14 @@ function checkLicense (filename, licenseId) {
   }
   return licenseId;
 }
+
+
+var imageExtensions = [ 'jpg', 'png', 'hdr', 'gif' ];
+
+var images = [];
+var licenses = [];
+var licenseExtension = 'txt';
+var folderLicense = 'license.' + licenseExtension;
 
 function dirTree (filename, licenseId, tags) {
   var stats = fs.lstatSync(filename),
