@@ -1,4 +1,6 @@
-# a-inspector-assets
+# sample-assets
+
+Curated collection of assets (images, models and sounds) to use in A-Frame.
 
 > Work in progress.
 
