@@ -69,5 +69,4 @@ npm run build
 
 You can fetch the assets JSON using the following url:
 
-https://fernandojsg.github.io/a-inspector-assets/build/images.json
-
+https://aframevr.github.io/sample-assets/build/images.json

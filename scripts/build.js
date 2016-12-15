@@ -81,7 +81,7 @@ var data = {
   images: images
 };
 
-var outputDir = 'build';
+var outputDir = 'dist';
 if (!fs.existsSync(outputDir)){
     fs.mkdirSync(outputDir);
 }
