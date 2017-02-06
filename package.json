@@ -14,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/aframevr/sample-assets/issues"
   },
-  "homepage": "https://github.com/aframevr/sample-assets#readme"
+  "homepage": "https://github.com/aframevr/sample-assets#readme",
+  "devDependencies": {
+    "image-size": "^0.5.1"
+  }
 }

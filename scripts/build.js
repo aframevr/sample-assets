@@ -1,6 +1,10 @@
 var fs = require('fs'),
     path = require('path'),
-    util = require('util')
+    util = require('util'),
+    gm = require('gm'),
+    sizeOf = require('image-size');
+
+var THUMBNAIL_SIZE = 155;
 
 function log (data) {
   console.log(util.inspect(data, false, null));
@@ -15,13 +19,13 @@ function getValidId (name) {
           .toLowerCase();
 }
 
-function getExtension (filename) {
-  return filename.toLowerCase().substr(filename.lastIndexOf('.') + 1);
+function getExtension (path) {
+  return path.toLowerCase().substr(path.lastIndexOf('.') + 1);
 }
 
-function checkLicense (filename, licenseId) {
+function checkLicense (path, licenseId) {
   try {
-    var buf = fs.readFileSync(filename, "utf8");
+    var buf = fs.readFileSync(path, "utf8");
     licenseId = licenses.push(buf) - 1;
   } catch (e) {
 
@@ -37,36 +41,57 @@ var licenses = [];
 var licenseExtension = 'txt';
 var folderLicense = 'license.' + licenseExtension;
 
-function dirTree (filename, licenseId, tags) {
-  var stats = fs.lstatSync(filename),
+function processImages (fullpath, licenseId, tags, filename) {
+  var stats = fs.lstatSync(fullpath),
       info = {};
 
   if (stats.isDirectory()) {
-    licenseId = checkLicense(filename + '/' + folderLicense, licenseId);
+    licenseId = checkLicense(fullpath + '/' + folderLicense, licenseId);
 
-    info.name = path.basename(filename);
+    info.name = path.basename(fullpath);
     info.isFolder = true;
-    var children = fs.readdirSync(filename);
-    if (filename !== 'images') { tags.push(info.name); }
+    var children = fs.readdirSync(fullpath);
+    if (fullpath !== 'images') { tags.push(info.name); }
     info.children = children
       .filter(function(child) {
-        if (fs.lstatSync(filename + '/' + child).isDirectory() || imageExtensions.indexOf(getExtension(child)) !== -1) {
+        if (fs.lstatSync(fullpath + '/' + child).isDirectory() || imageExtensions.indexOf(getExtension(child)) !== -1) {
           return true;
         }
         return false;
       })
       .map(function(child) {
-        return dirTree(filename + '/' + child, licenseId, tags);
+        return processImages(fullpath + '/' + child, licenseId, tags, child);
       });
-    if (filename !== 'images') { tags.pop(); }
+    if (fullpath !== 'images') { tags.pop(); }
   } else {
-    var licenseFile = filename.substr(0, filename.lastIndexOf('.')) + '.' + licenseExtension;
+    var licenseFile = fullpath.substr(0, fullpath.lastIndexOf('.')) + '.' + licenseExtension;
     licenseId = checkLicense(licenseFile, licenseId);
 
     info.licenseId = licenseId;
-    info.id = getValidId(filename);
-    info.path = filename;
+    info.id = getValidId(fullpath);
+    info.path = fullpath.replace('assets/images/', '');
     info.tags = tags.slice(0);
+    info.thumbnail = fullpath.replace('assets/images/', '').replace(/\//g, '');
+
+    // Generate thumbnail
+    gm(fullpath)
+    .resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE)
+    .noProfile()
+    .write('assets/thumbs/images/' + info.thumbnail, function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    // Get image size synchronously
+    try {
+      var dimensions = sizeOf(fullpath);
+      info.width = dimensions.width;
+      info.height = dimensions.height;
+    } catch (e) {
+      info.width = 0;
+      info.heght = 0;
+    }
 
     images.push(info);
   }
@@ -74,10 +99,14 @@ function dirTree (filename, licenseId, tags) {
   return info;
 }
 
-dirTree('assets/images', -1, []);
+processImages('assets/images', -1, []);
 
 var data = {
   licenses: licenses,
+  basepath: {
+    images: 'assets/images/',
+    images_thumbnails: 'assets/thumbs/images/'
+  },
   images: images
 };
 
