@@ -71,4 +71,4 @@ npm run build
 
 You can fetch the assets JSON using the following url:
 
-https://aframevr.github.io/sample-assets/build/images.json
+https://rawgit.com/aframevr/sample-assets/master/dist/images.json
